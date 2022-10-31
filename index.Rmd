@@ -1,6 +1,6 @@
 --- 
-title: "2022 US Election Analysis"
-author: "William Gu,    Shujie Hu"
+title: "NYC 2022 Shooting Incident Analysis"
+author: "William Gu, Shujie Hu"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
