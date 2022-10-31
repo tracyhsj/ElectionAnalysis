@@ -2,5 +2,25 @@
 
 ## Research topic
 
+Provide a short description of your topic.
+(suggested: approximately 1/2 page)
+ 
+Occur_data/time: interactive bar chart D3
+Geography: 
+LOC_OF_OCCUR_DESC vs STATISTICAL_MURDER_FLAG
+LOCATION_DESCvs STATISTICAL_MURDER_FLAG
+Occurrence time vs location &| prep/vic info
+BORO vs PERP_AGE_GROUP+PERP_RACE
+BORO vs VIC_AGE_GROUP+VIC
+PERP_AGE_GROUP +PERP_SEX +PERP_RACE
+VIC_AGE_GROUP +VIC_SEX +VIC_RACE
+OCCUR_TIME vs STATISTICAL_MURDER_FLAG
+
 ## Data availability
 
+Identify one or more data sources (see II. D. above) that you propose to draw on for the project. For each, describe how the data are collected and by whom. Describe the format of the data, the frequency of updates, and any other relevant information. Carefully document your sources with links. Explain how you plan to import the data.
+(suggested: approximately 1.5 - 2 pages)
+
+https://www1.nyc.gov/site/nypd/stats/crime-statistics/citywide-crime-stats.page
+
+https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Year-To-Date-/5ucz-vwe8
