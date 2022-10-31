@@ -1,8 +1,8 @@
 book_filename: "finalproj"
 output_dir: docs
 delete_merged_file: true
-edit: https://github.com/tracyhsj/ElectionAnalysis/edit/main/%s
-view: https://github.com/tracyhsj/ElectionAnalysis/blob/main/%s
+edit: https://github.com/tracyhsj/NYC2022-Shooting-Incident-Analysis/edit/main/%s
+view: https://github.com/tracyhsj/NYC2022-Shooting-Incident-Analysis/blob/main/%s
 language:
   ui:
     chapter_name: "Chapter "
