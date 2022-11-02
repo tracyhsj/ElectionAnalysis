@@ -110,34 +110,25 @@
 <h1><span class="header-section-number">Chapter 2</span> Proposal<a href="proposal.html#proposal" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="research-topic" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Research topic<a href="proposal.html#research-topic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>    
-The New York Police Department records reported crime and releases datasets related to police enforcement and criminal activity, aiming to increase transparency and foster collaboration. We are interested in the citywide crime statistics, specifically shooting incidents in 2022, because we want to explore the patterns of New York City’s shooting incidents to study perpetrator-victim relationships and address personal safety awareness. It is worth studying these up-to-date shooting incidents when living in NYC, thereby we can have a clear picture of the crimes around us to avoid possible dangers. Through various data visualization techniques, we hope to find out answers to the following questions that we are interested in studying:<br />
+<p>The New York Police Department records reported crime and releases datasets related to police enforcement and criminal activity, aiming to increase transparency and foster collaboration. We are interested in the citywide crime statistics, specifically shooting incidents in 2022, because we want to explore the patterns of New York City’s shooting incidents to study perpetrator-victim relationships and address personal safety awareness. It is worth studying these up-to-date shooting incidents when living in NYC, thereby we can have a clear picture of the crimes around us to avoid possible dangers. Through various data visualization techniques, we hope to find out answers to the following questions that we are interested in studying:<br>
 <br>
-1. The number of shooting incidents with respect to the time(month or hour in a day).<br />
-2. The number of shooting incidents with respect to the five boroughs(The Bronx, Brooklyn, Manhattan, Queens, and Staten Island)<br />
-3. Given that the shooting occurs, the probability of death with respect to the five boroughs.<br />
-4. Given that the shooting occurs, the probability of death with respect to the location of the shooting incident.<br />
-5. The visualization of the perpetrator’s characteristics (eg. age, sex, and race)<br />
-6. The visualization of the victim’s characteristics to figure out possible inclination.<br />
-7. The relationship between different boroughs and the perpetrator’s characteristics.<br />
-8. The relationship between different boroughs and the victim’s characteristics.<br />
-9. The probability of death with respect to the perpetrator’s age, sex, and race VS. the victim’s characteristics.<br />
-10. The probability of death in the shooting incidents with respect to hours in a day.</p>
+1. The number of shooting incidents with respect to the time(month or hour in a day).<br>
+2. The number of shooting incidents with respect to the five boroughs(The Bronx, Brooklyn, Manhattan, Queens, and Staten Island). <br>
+3. Given that the shooting occurs, the probability of death with respect to the five boroughs.<br>
+4. Given that the shooting occurs, the probability of death with respect to the location of the shooting incident.<br>
+5. The visualization of the perpetrator’s characteristics (eg. age, sex, and race). <br>
+6. The visualization of the victim’s characteristics to figure out possible inclination.<br>
+7. The relationship between different boroughs and the perpetrator’s characteristics.<br>
+8. The relationship between different boroughs and the victim’s characteristics.<br>
+9. The probability of death with respect to the perpetrator’s age, sex, and race VS. the victim’s characteristics.<br>
+10. The probability of death in the shooting incidents with respect to hours in a day.<br></p>
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>    
-The <a href="https://www1.nyc.gov/site/nypd/stats/crime-statistics/citywide-crime-stats.page">datasource</a> of this project is from the data published and maintained by the New York Police Department. There were many other data sources that we considered when deciding to analyze crime-related information about New York City, however, the New York Police Department is the most reliable source as their data is collected based on the reported crimes they record. Therefore, we considered collecting the citywide crime data directly released by the New York Police Department.<br />
-    
-NYPD provides quarterly-updated crime incident datasets such as arrest and complaint, among which we are most interested in and therefore decide to analyze the shooting incidents this year. We may also consider referring to statistics of other crimes or shootings in former years for comparison.<br />
-    
-The New York Police Department provides the data in the format of csv files on the official website. The next steps would be importing the data from the NYPD website and performing data pre-processing such as combining datasets and cleaning by using Python or R.<br />
-    
-This shooting incident dataset contains 21 features, including the occurrence date, result of the incident, the age, gender and race of victim and perpetrator. This dataset covers all data types, such as numerical, categorical, time series, and spatial-temporal. There is rich information about each incident, such as the specific time, latitude and longitude of the incident, whether the incident is inside or outside, the borough and precinct, and the location classification category like housing or street.<br />
-    
-Below is the preview for the shooting incident data.<br />
-<img src="image/data_example.png" alt="example_of_data" />
-    
+<p>The <a href="https://www1.nyc.gov/site/nypd/stats/crime-statistics/citywide-crime-stats.page">datasource</a> of this project is from the data published and maintained by the New York Police Department. There were many other data sources that we considered when deciding to analyze crime-related information about New York City, however, the New York Police Department is the most reliable source as their data is collected based on the reported crimes they record. Therefore, we considered collecting the citywide crime data directly released by the New York Police Department. <br><br>
+NYPD provides quarterly-updated crime incident datasets such as arrest and complaint, among which we are most interested in and therefore decide to analyze the shooting incidents this year. We may also consider referring to statistics of other crimes or shootings in former years for comparison.<br><br>
+The New York Police Department provides the data in the format of csv files on the official website. The next steps would be importing the data from the NYPD website and performing data pre-processing such as combining datasets and cleaning by using Python or R.<br><br>
+This shooting incident dataset contains 21 features, including the occurrence date, result of the incident, the age, gender and race of victim and perpetrator. This dataset covers all data types, such as numerical, categorical, time series, and spatial-temporal. There is rich information about each incident, such as the specific time, latitude and longitude of the incident, whether the incident is inside or outside, the borough and precinct, and the location classification category like housing or street. <br><br>
 Overall, the data is reliable and of good quality. However, there are null values for certain columns, for example, LOCATION_DESC and information about the perpetrator like PERP_AGE_GROUP and PERP_SEX. The missing information about the perpetrators is understandable as the police may not be able to arrest the perpetrator in the crime scene. We will pay special consideration regarding missing values in different situations in our project, for some tasks we may need to neglect these missing values as the information is not provided to us, while for some tasks about the perpetrator we may regard these missing values as a separate group and perform analysis on this group.</p>
 
 </div>
