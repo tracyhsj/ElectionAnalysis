@@ -7,6 +7,9 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-intro..
 
-browseURL("docs/index.html")
+&#160;&#160;&#160;&#160;
+Besides the beautiful skyline and bustling streets, public safety have always been a concerned factor for the ones who just moved to New York City, especially after seeing the news of consecutive murder incidents happened this summer. The shooting in east village right after the Fall semester starts again caused panic among students.  
+&#160;&#160;&#160;&#160;
+Thus, we’d like to explore the criminal activities, focusing on shooting incidents that happened this year, so that we can have a better knowledge of each areas in NYC and arrange our schedule wisely to avoid possible danger.  
+
