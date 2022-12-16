@@ -1,0 +1,513 @@
+--- 
+title: "NYC 2022 Shooting Incident Analysis"
+author: "William Gu, Shujie Hu"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Introduction
+
+
+&#160;&#160;&#160;&#160;
+Besides the beautiful skyline and bustling streets, public safety have always been a concerned factor for the ones who just moved to New York City, especially after seeing the news of consecutive murder incidents happened this summer. The shooting in east village right after the Fall semester starts again caused panic among students.  
+&#160;&#160;&#160;&#160;
+Thus, we’d like to explore the criminal activities, focusing on shooting incidents that happened this year, so that we can have a better knowledge of each areas in NYC and arrange our schedule wisely to avoid possible danger.  
+
+
+<!--chapter:end:index.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Proposal
+
+## Research topic
+
+Behind the beautiful skyline and bustling streets, criminal scenes may happen on every corner at any moment. The consecutive murder incidents that happened this summer and the shooting in the East Village right after the Fall semester starts caused panic among the citizens. Public safety has always been a concern, especially for the ones who just moved to New York City. Though these shooting incidents seem to be random at first glance, data analysis and visualization help reveal the hidden correlation and provide hints about public safety concerns. <br><br>
+
+The New York Police Department records reported crimes and releases data sets related to police enforcement and criminal activity, aiming to increase transparency and foster collaboration. With the data provided by NYPD, we are interested in the citywide crime statistics, specifically shooting incidents in 2022. It is worth studying these up-to-date shooting incidents when living in NYC, thereby we can have a clear picture of the crimes around us to avoid possible dangers. Specifically, we are interested in questions relating to the characteristics of victims and suspects, and the possible correlation between the victims/suspects' characteristics with respect to the incident's geography or occurrence time. 
+ 
+
+
+## Data availability
+
+  The [datasource](https://www1.nyc.gov/site/nypd/stats/crime-statistics/citywide-crime-stats.page) of this project is from the data published and maintained by the New York Police Department. There were many other data sources that we considered when deciding to analyze crime-related information about New York City, however, the New York Police Department is the most reliable source as their data is collected based on the reported crimes they record. Therefore, we considered collecting the citywide crime data directly released by the New York Police Department. <br><br>
+NYPD provides quarterly-updated crime incident datasets such as arrest and complaint, among which we are most interested in and therefore decide to analyze the shooting incidents this year. We may also consider referring to statistics of other crimes or shootings in former years for comparison.<br><br>
+  The New York Police Department provides the shooting incidents data in multiple formats on their official website, among these formats, we found csv to be the most convenient to be analyzed in R. The next steps would be importing the data from the NYPD website and performing data pre-processing such as combining datasets and cleaning by using either Python or R.<br><br>
+  Overall, the data is reliable and of good quality. However, there are null values for certain columns, for example, LOCATION_DESC and information about the perpetrator like PERP_AGE_GROUP and PERP_SEX. Though the missing information about the perpetrators is understandable as the police may not be able to arrest the perpetrator in the crime scene, we will check these missing values specifically with a missing value analysis. We will pay special consideration regarding missing values in different situations in our project, for some tasks we may need to neglect these missing values as the information is not provided to us, while for some tasks about the perpetrator we may regard these missing values as a separate group and perform analysis on this group.
+
+<!--chapter:end:proposal.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Data 
+
+## Sources
+
+The source of this data set is the New York Police Department(NYPD), which is responsible for collecting and maintaining the data. It is manually collected by the police in each shooting incident that occurred in NYC during the current calendar year, extracted every quarter and reviewed by the Office of Management Analysis and Planning before being posted on the NYPD website. There are several data sets relating to crimes in NYC with different time range on the NYPD website, for example, the Incident Level Arrest Data (2013-now) and City Wide Crime Statistics Weekly. We chose the year-to-date Shooting Incident Data because shooting incidents are one of the most fatal crimes but it is also one that happens frequently in NYC, it is worth investigating the correlation and implication behind this data. And since the outbreak of the pandemic, crime statistics may differ from the previous years, therefore we are interested in the most recent year's data. <br><br>
+
+This shooting incident data set contains 21 features as its columns, including the occurrence date, the STATISTICAL_MURDER_FLAG which is the result of the incident, information related to suspect and victim demographics, and the age, gender, and race of both suspect and victim. There is also rich information about each incident, such as the specific time, latitude and longitude of the incident, the location of occurrence like inside or outside, the borough and precinct, and the location classification category like housing or street. This data set covers almost all types of variables, such as categorical, time series, and spatial-temporal, with data types like plain text, data time, and number. There are 1400 rows and each row is a record of a shooting incident. <br><br>
+
+At first glance, we noticed that there are many missing values in this data set, especially in the columns about the perpetrator and the location of the incidents. We further investigate this in our missing value analysis to see if the missing values will affect the analysis, and we will also take action on these missing values when appropriate during our data visualization. Moreover, the empty cells are denoted as a string "(null)” in this data set, therefore our first step is to transform this data set into the correct format.<br><br>
+
+## Cleaning / transformation
+
+This data set is organized and does not contain a lot of mal-formatted values. Though data transformation is required for most of the graphs in the analysis process, in the preliminary stage, the only transformation needs to be done on the whole data set is to adjust the null values. The original data set uses "(null)" with character type to represent the NAs, therefore when loading the data set, all "(null)" values were transformed into the empty string NA.
+
+
+## Missing value analysis
+
+
+```{r}
+install.packages("naniar")
+
+```
+
+```{r}
+library(dplyr)
+# library(tibble)
+# library(tidyr)
+# library(ggplot2)
+# library(forcats)
+library(redav)
+library(naniar)
+```
+
+```{r}
+data <- read.csv(file = 'data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv', na.strings = "(null)")
+# head(data)
+```
+
+```{r}
+gg_miss_var(data)
+
+colSums(is.na(data)) %>%
+  sort(decreasing = TRUE)
+
+```
+
+We first plot the missing value chart to check the missing values column-wise, along with a summary that clarify the specific number of missing values in each column. As only 7 columns out of the 21 columns contain missing value, we extract these columns to proceed further into the next step of missing value analysis.
+<br><br><br>
+
+```{r}
+pattern_data = subset(data, select = c("LOCATION_DESC","PERP_AGE_GROUP", "PERP_SEX", "PERP_RACE", "LOC_CLASSFCTN_DESC", "Latitude", "Longitude") ) %>%
+dplyr::rename(loc= LOCATION_DESC, p_age=PERP_AGE_GROUP, p_sex=PERP_SEX, p_race=PERP_RACE, loc_class=LOC_CLASSFCTN_DESC, lat=Latitude, long=Longitude)
+
+plot_missing(pattern_data, percent = TRUE)
+```
+We then explore the missing patterns in this data set, which refer to the combination of columns missing. The variables are abbreviated to prevent the axis labels from overlapping with each other. The top part of this graph shows the percentage of missing values in each column, and notice that loc, which stands for LOCATION_DESC, has more than 50% of its value being missing. This may due to the fact there are two columns representing the location, and LOCATION_DESC is a subcategory of LOC_CLASSFCTION(loc_class), so that it may be left empty since it is too specific and redundant, recording either of them is enough information for representing the location. The middle part of the graph presents the missing patterns and the right part shows the percentage for each missing patterns. While loc alone is the highest among all 9 patterns, the pattern (loc + loc_class) has the lowest percentage of rows missing, which reinforces the hypothesis that loc is left empty for most cases as either of loc or loc_class contains enough information for the location of the incidents, so that the case that both are missing is rare. 
+<br><br>
+Also notice that 4 out of the 7 missing columns are about the location of the incident, the other 3 columns are all about the information of the perpetrator, and the pattern (p_age, p_sex, p_race) ranks the third for the percentage of rows. This shows that sometimes the perpetrator is able to escape from the crime scene, leaving with no record to the police, which is a strong contrast to the victims' data since no victim's information is missing in this data set.
+<br><br>
+From the above missing value analysis, we figure out that these missing values won't create a huge impact on our data analysis, since either missing values are unnecessary and backed up by other information, or it is inevitable in nature that the source of this data is not able to provide the record.
+
+
+
+<!--chapter:end:data.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Results
+
+<!--chapter:end:results.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Interactive component
+In this part, we provides two interactive plots in order to further explore our data more conveniently.
+
+In previous plots, we observed shooting incident weekly counts as the data appears narrowed for a large time range. In the first plot, we can use interactive tools to zoom in on selected time range, so that we can observe the day-to-day change of shooting incident numbers, and observe the overall trend at the same time.
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(ggalluvial)
+library(plotly)
+
+data <- read.csv("./data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv", na.strings=c("(null)", "UNKNOWN", "U"))
+
+df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
+#str(df_date)
+
+#df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |> summarize(Count = n())
+#df_date2 <- df_date2 |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
+df_date <- df_date |> rename(Date=OCCUR_DATE) |> group_by(Date) |> summarize(Count = n())
+#df_date2
+
+plot_ly(  
+    df_date, x = ~Date, y = ~Count, 
+    type = 'scatter',  
+    mode = 'lines+markers',  
+    # Hover text:  
+    hoverinfo = 'text',  
+    text = ~paste(Date)  
+)  
+```
+<br>
+We can also explore the distribution of shooting incident at the time of day, with variation of victim's age range and within the selected window of dates. By using the slider in the second plot, we can change the range of month selected, thus we can observe the change in distribution. In the dropdown menu, we can select the age range of victim. It is set to 'All', which means all data were selected by default. By changing the selection, we can explore the distribution based on different victim characteristics; and we can set it back to default at any time. 
+For instance, by selecting "65+" we can observe only a small amount of incidents happened and they all distributed in the evening, which are statistically understandable. 
+
+
+
+<meta charset="utf-8">
+
+<style>
+svg {
+    font-family: sans-serif;
+}
+
+rect.overlay {
+    stroke: black;
+}
+
+rect.selection {
+  stroke: none;
+  fill: steelblue;
+  fill-opacity: 0.6;
+}
+
+#labelleft, #labelright {
+  dominant-baseline: hanging;
+  font-size: 12px;
+}
+
+#labelleft {
+    text-anchor: end;
+}
+
+#labelright {
+    text-anchor: start;
+}
+</style>
+
+<!-- Load d3.js you can use ither version if you want -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="sliderDiv"></div>
+<p id="dropdownP" style="margin-left:100px;">Victim age range: </p>
+<div id="dataviz"></div>
+
+<script>
+
+// set the dimensions and margins of the graph
+// You can change these values these are just sample values given
+var margin = {top: 30, right: 100, bottom: 60, left: 100},
+    width = 800 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+var layout = ({width: 800, height: 100,
+  margin: {top: 30, bottom: 35, left: 100, right: 100}
+})
+
+slider_snap = function(min, max, starting_min=min, starting_max=max) {
+  var range = [min, max + 1]
+  var starting_range = [starting_min, starting_max + 1]
+
+  // set width and height of svg
+  var w = layout.width
+  var h = layout.height
+  var margin = layout.margin
+
+  // dimensions of slider bar
+  var width = w - margin.left - margin.right;
+  var height = h - margin.top - margin.bottom;
+
+  // create x scale
+  var x = d3.scaleLinear()
+    .domain(range)  // data space
+    .range([0, width]);  // display space
+  
+  // create svg and translated g
+  var svg = d3.select("#sliderDiv").append("svg").attr("width", w).attr("height", h)
+  const g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`)
+  
+  // draw background lines
+  g.append('g').selectAll('line')
+    .data(d3.range(range[0], range[1]+1))
+    .enter()
+    .append('line')
+    .attr('x1', d => x(d)).attr('x2', d => x(d))
+    .attr('y1', 0).attr('y2', height)
+    .style('stroke', '#ccc')
+  
+  // labels
+  var labelL = g.append('text')
+    .attr('id', 'labelleft')
+    .attr('x', 0)
+    .attr('y', height + 5)
+    .text(range[0])
+
+  var labelR = g.append('text')
+    .attr('id', 'labelright')
+    .attr('x', 0)
+    .attr('y', height + 5)
+    .text(range[1])
+
+  // define brush
+  var brush = d3.brushX()
+    .extent([[0,0], [width, height]])
+    .on('brush', function() {
+      var s = d3.event.selection;
+      // update and move labels
+      labelL.attr('x', s[0])
+        .text(Math.round(x.invert(s[0])))
+      labelR.attr('x', s[1])
+        .text(Math.round(x.invert(s[1])) - 1)
+      // move brush handles      
+      handle.attr("display", null).attr("transform", function(d, i) { return "translate(" + [ s[i], - height / 4] + ")"; });
+      // update view
+      // if the view should only be updated after brushing is over, 
+      // move these two lines into the on('end') part below
+      svg.node().value = s.map(d => Math.round(x.invert(d)));
+      //svg.node().dispatchEvent(new CustomEvent("input"));
+      let event = new Event("change"); sliderDiv.dispatchEvent(event);
+    })
+    .on('end', function() {
+      if (!d3.event.sourceEvent) return;
+      var d0 = d3.event.selection.map(x.invert);
+      var d1 = d0.map(Math.round)
+      d3.select(this).transition().call(d3.event.target.move, d1.map(x))
+    })
+
+  // append brush to g
+  var gBrush = g.append("g")
+      .attr("class", "brush")
+      .call(brush)
+
+  // add brush handles (from https://bl.ocks.org/Fil/2d43867ba1f36a05459c7113c7f6f98a)
+  var brushResizePath = function(d) {
+      var e = +(d.type == "e"),
+          x = e ? 1 : -1,
+          y = height / 2;
+      return "M" + (.5 * x) + "," + y + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (y + 6) + "V" + (2 * y - 6) +
+        "A6,6 0 0 " + e + " " + (.5 * x) + "," + (2 * y) + "Z" + "M" + (2.5 * x) + "," + (y + 8) + "V" + (2 * y - 8) +
+        "M" + (4.5 * x) + "," + (y + 8) + "V" + (2 * y - 8);
+  }
+
+  var handle = gBrush.selectAll(".handle--custom")
+    .data([{type: "w"}, {type: "e"}])
+    .enter().append("path")
+    .attr("class", "handle--custom")
+    .attr("stroke", "#000")
+    .attr("fill", '#eee')
+    .attr("cursor", "ew-resize")
+    .attr("d", brushResizePath);
+    
+  // override default behaviour - clicking outside of the selected area 
+  // will select a small piece there rather than deselecting everything
+  // https://bl.ocks.org/mbostock/6498000
+  gBrush.selectAll(".overlay")
+    .each(function(d) { d.type = "selection"; })
+    .on("mousedown touchstart", brushcentered)
+  
+  function brushcentered() {
+    var dx = x(1) - x(0), // Use a fixed width when recentering.
+    cx = d3.mouse(this)[0],
+    x0 = cx - dx / 2,
+    x1 = cx + dx / 2;
+    d3.select(this.parentNode).call(brush.move, x1 > width ? [width - dx, width] : x0 < 0 ? [0, dx] : [x0, x1]);
+  }
+  
+  // select entire starting range
+  gBrush.call(brush.move, starting_range.map(x))
+
+  g.append("text")
+    .attr("x", (width / 2))             
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")  
+    .style("font-size", "16px") 
+    //.style("text-decoration", "underline")  
+    .text("Select time range");
+
+  var getRange = function() { var range = d3.brushSelection(gBrush.node()).map(d => Math.round(x.invert(d))); return range }
+  return {getRange: getRange}
+  
+  return svg.node()
+}
+
+// uncomment the function and complete this function to plot required graphs
+d3.csv("https://raw.githubusercontent.com/tracyhsj/NYC2022-Shooting-Incident-Analysis/main/data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv", function(data) {
+  //console.log(data)
+
+  var data_keys = ["All", "<18", "25-44", "18-24", "45-64", "65+"];
+
+  var initial_key = "All"
+  var curr_data = data;
+
+  var dur = 500;
+
+  // Y axis: initialization
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+  var yAxis = svg.append("g")
+
+  var x = d3.scaleTime()
+        .domain([new Date().setHours(0,0,0), new Date().setHours(23,59,59)])
+        //.domain([format(timeparse("00:00:00")), format(timeparse("23:59:59"))])
+        .range([0, width]);
+  
+  var xAxis = svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+
+  // A function that builds the graph for a specific value of bin
+  function update() {
+      xAxis
+          .transition()
+          .duration(dur)
+          .call(d3.axisBottom(x));
+
+    // set the parameters for the histogram
+    var histogram = d3.histogram()
+        .value(function(d) {
+            const [hh, mm, ss] = d.OCCUR_TIME.split(':');
+            return new Date().setHours(+hh, +mm, +ss);
+            //return d.OCCUR_TIME;
+            })   // I need to give the vector of value
+        .domain(x.domain())  // then the domain of the graphic
+        .thresholds(x.ticks(24)); // then the numbers of bins
+
+    // And apply this function to data to get the bins
+    var bins = histogram(curr_data);
+
+    // Y axis: update now that we know the domain
+    y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+    yAxis
+        .transition()
+        .duration(dur)
+        .call(d3.axisLeft(y));
+
+    // Join the rect with the bins data
+    var u = svg.selectAll("rect")
+        .data(bins)
+
+    // Manage the existing bars and eventually the new ones:
+    u
+        .enter()
+        .append("rect") // Add a new rect for each new elements
+        .merge(u) // get the already existing elements as well
+        .transition() // and apply changes to all of them
+        .duration(dur)
+          .attr("x", 1)
+          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+          .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+          .attr("height", function(d) { return height - y(d.length); })
+          .style("fill", "#69b3a2")
+
+    // If less bar in the new histogram, I delete the ones not in use anymore
+    u.exit().remove()
+
+    };
+
+    var dropdownChange = function() {
+        var newKey = d3.select(this).property('value');
+        if(newKey == "All") { curr_data = data;}
+        else {curr_data = data.filter(d=>d.VIC_AGE_GROUP==newKey)}
+        
+        update();
+        //console.log(curr_data)
+        //update(parseInt(d3.select("#nBin").property('value')));
+        //d3.select("#nBin").property('value', 10);
+        //update(10);
+    };
+
+    var dropdown = d3.select("#dropdownP")
+        .insert("select", "svg")
+        .on("change", dropdownChange);
+
+    dropdown.selectAll("option")
+      .data(data_keys)
+      .enter().append("option")
+        .attr("value", function (d) { return d; })
+        .text(function (d) {
+            return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
+        });
+
+  update();
+
+  var myslider = slider_snap(1, 12)
+
+  d3.select('#sliderDiv').on('change', function() {
+    //console.log(myslider.getRange())
+    var starting_month = myslider.getRange()[0]
+    var ending_month = myslider.getRange()[1]-1;
+    curr_data = data.filter(function(d) {
+      const [mm, dd, yy] = d.OCCUR_DATE.split('/')
+      return parseInt(mm)>=starting_month && parseInt(mm)<=ending_month;
+    })
+    //console.log(starting_month, ending_month)
+    //console.log(curr_data)
+    update();
+  });
+
+  svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("y", -40)
+    .attr("x", -height/2)
+    .attr("transform", "rotate(-90)")
+    .style("font-size", "16px")
+    .text("Number of incidents");
+
+  svg.append("text")
+    .attr("x", (width / 2))             
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")  
+    .style("font-size", "16px") 
+    //.style("text-decoration", "underline")  
+    .text("Shooting Incidents Occur time in 2022");
+
+
+});
+</script>
+<!-- Reference: d3 slider codes: https://observablehq.com/@sarah37/snapping-range-slider-with-d3-brush-->
+
+<!--chapter:end:interactive.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Conclusion
+
+
+<!--chapter:end:conclusion.Rmd-->
+
