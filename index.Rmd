@@ -7,9 +7,19 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+  As shooting incidents are one of the most fatal crimes but also one that happens frequently in NYC, we’d like to investigate the correlation behind these incidents, hoping to explore the patterns of New York City’s shooting incidents to study perpetrator-victim relationships and address personal safety awareness. Since crime statistics may differ from the years prior to the pandemic, we will explore the most recent shooting incidents in NYC.
+  Through various data visualization techniques, we hope to answer the following questions that we are interested in studying:
+<br>
+1. The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)<br>
+2. The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart) <br>
+3. The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart & Stacked Histogram)<br>
+4. The Ratio of Death With Respect To The Specific Location of The Shooting Incidents (Cleveland dot plot)<br>
+5. The Ratio of Death For The Shooting Incidents In Each Borough (Stacked Bar Chart)<br>
 
-&#160;&#160;&#160;&#160;
-Besides the beautiful skyline and bustling streets, public safety have always been a concerned factor for the ones who just moved to New York City, especially after seeing the news of consecutive murder incidents happened this summer. The shooting in east village right after the Fall semester starts again caused panic among students.  
-&#160;&#160;&#160;&#160;
-Thus, we’d like to explore the criminal activities, focusing on shooting incidents that happened this year, so that we can have a better knowledge of each areas in NYC and arrange our schedule wisely to avoid possible danger.  
-
+6. The Number of Shooting Incidents With Respect to the Precincts. (Map) <br>
+7. The Correlation Between Different Boroughs and the Victims/Perpetrators. (Histogram + facet)<br>
+8. The Contrast Between Perpetrators' Age vs Victims’ Age. (Population Pyramid) <br>
+9. The Visualization of the Victims’ Characteristics. (Mirror Chart + facet & Alluvial Chart)<br>
+10. The Visualization of the Perpetrators' Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)<br>
+ 
+browseURL("docs/index.html")
