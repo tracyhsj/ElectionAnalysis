@@ -15,11 +15,10 @@ site: bookdown::bookdown_site
 3. The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart & Stacked Histogram)<br>
 4. The Ratio of Death With Respect To The Specific Location of The Shooting Incidents (Cleveland dot plot)<br>
 5. The Ratio of Death For The Shooting Incidents In Each Borough (Stacked Bar Chart)<br>
-
 6. The Number of Shooting Incidents With Respect to the Precincts. (Map) <br>
 7. The Correlation Between Different Boroughs and the Victims/Perpetrators. (Histogram + facet)<br>
 8. The Contrast Between Perpetrators' Age vs Victims’ Age. (Population Pyramid) <br>
 9. The Visualization of the Victims’ Characteristics. (Mirror Chart + facet & Alluvial Chart)<br>
 10. The Visualization of the Perpetrators' Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)<br>
  
-browseURL("docs/index.html")
+

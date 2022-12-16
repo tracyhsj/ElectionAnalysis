@@ -241,7 +241,7 @@ The Ratio of Death With Respect To The Location of The Shooting Incidents (Cleve
 
 df_loc <-  data
 df_loc <- df_loc |> filter(STATISTICAL_MURDER_FLAG == "Y" | STATISTICAL_MURDER_FLAG == "N") |> mutate(LOCATION_DESC_new = fct_lump_min(LOCATION_DESC,5))
-df_loc <- df_loc |> group_by(LOCATION_DESC_new, STATISTICAL_MURDER_FLAG) |> summarize(n = n())
+df_loc <- df_loc |> group_by(LOCATION_DESC_new, STATISTICAL_MURDER_FLAG) |> dplyr::summarize(n = n())
 ggplot(df_loc, aes(x = n, y = fct_reorder2(LOCATION_DESC_new, STATISTICAL_MURDER_FLAG== "Y",n,.desc=FALSE))) + 
   geom_point(aes(color = STATISTICAL_MURDER_FLAG)) +
   #coord_trans(x = "log10") +
@@ -291,7 +291,7 @@ library(plotly)
 df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
 #str(df_date)
 
-df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |> summarize(n = n())
+df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |>  dplyr::summarize(n = n())
 df_date2 <- df_date2 |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
 #df_date2
 
@@ -319,7 +319,7 @@ df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
 #str(df_date)
 
 #df_date2 <-df_date |> mutate(week = cut.Date(OCCUR_DATE, breaks="1 week", labels=FALSE)) |> arrange(OCCUR_DATE)
-df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week, BORO, .drop = FALSE) |> summarize(n = n())
+df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week, BORO, .drop = FALSE) |> dplyr::summarize(n = n())
 #df_date2 <- df_date2 |> group_by(OCCUR_DATE, BORO) |> summarize(n = n(), week=week)
 df_date2 <- df_date2 |> ungroup() |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
 #df_date2
@@ -355,7 +355,7 @@ df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
 df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week, BORO, .drop = FALSE)
 #df_date2 <- df_date2 |> group_by(OCCUR_DATE, BORO) |> summarize(n = n(), week=week)
 df_date2 <- df_date2 |> ungroup() |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
-df_date2
+# df_date2
 
 #ggplot(df_date, aes(x=format(OCCUR_DATE, "%Y-%m"))) +
 ggplot(df_date2, aes(x=Date, fill=BORO))+
@@ -367,6 +367,6 @@ ggplot(df_date2, aes(x=Date, fill=BORO))+
 ```
 The above two graphs visualized the number of shooting incidents in the five boroughs by weeks in the past 3 quarters. From the line chart we noticed that Brooklyn's incidents peaks at April, but the total number of incidents in all five boroughs peaks at July as shown by the stacked histogram.
 
-##Summary of Results:
+## Summary of Results:
 
-In this analysis of the most recent shooting incidents in NYC, we found out that East New York, the Bronx, and Brownsville are the most dangerous areas in New York City in terms of the number of shooting incidents. And black males with age between 25 and 44 are the most vulnerable, as this group of people has the highest number of victims in these incidents. In general, perpetrator tends to be younger than the victims, and the age group 25-44 ranks first in both the number of perpetrators and the number of victims across all boroughs. For college students (aged between 18-24) in NYC, Brooklyn is the most dangerous borough as it has the highest number of victims under this age group. And though in general apartment building has the highest number of shooting incidents, places like Beauty/nail salon, social club, liquor store, and bar have a higher death rate. Speaking of time of the occurence, July is when the number of shooting incidents peak so far this year, while the trend is decreasing since July.
+In this analysis of the most recent shooting incidents in NYC, we found out that East New York, the Bronx, and Brownsville are the most dangerous areas in New York City in terms of the number of shooting incidents. And black males with age between 25 and 44 are the most vulnerable, as this group of people has the highest number of victims in these incidents. In general, perpetrator tends to be younger than the victims, and the age group 25-44 ranks first in both the number of perpetrators and the number of victims across all boroughs. For college students (aged between 18-24) in NYC, Brooklyn is the most dangerous borough as it has the highest number of victims under this age group. And though in general apartment building has the highest number of shooting incidents, places like Beauty/nail salon, social club, liquor store, and bar have a higher death rate. Speaking of time of the occurrence, July is when the number of shooting incidents peak so far this year, while the trend is decreasing since July.
