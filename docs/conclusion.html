@@ -23,7 +23,7 @@
 <meta name="author" content="William Gu, Shujie Hu" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -84,7 +84,12 @@
 <li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#the-victimsperpetrators-characteristics"><i class="fa fa-check"></i><b>4.1</b> The Victims/Perpetrators’ Characteristics</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-demographics"><i class="fa fa-check"></i><b>4.2</b> Visualization Relating to Incidents Demographics</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-date-time"><i class="fa fa-check"></i><b>4.3</b> Visualization Relating to Incidents Date Time</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -108,6 +113,10 @@
             <section class="normal" id="section-">
 <div id="conclusion" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>During this process of data analysis, we explored various techniques to visualize the shooting incidents data in New York City and discovered some key findings. We found out that, as expected, there are more male perpetrators/victims than females, and most of the perpetrators or victims are under the age group 25-44. However, we also found out surprisingly that the perpetrators are slightly younger than the victims, meaning that there might be perpetrators targeting older people. As for geography, most shooting incidents occurred in Brooklyn, with the next being the Bronx. And though in general apartment building has the highest number of shooting incidents, places like Beauty/nail salon, social club, liquor store, and bar have a higher death rate. Speaking of time of the occurrence, July is when the number of shooting incidents peak so far this year, while the trend is decreasing since July.</p>
+<p>The main limitation of this project is due to the absence of continuous variables in the original data set, even though we tried our best to mutate the data set to get some continuous variables, like the frequency and percentage, however, it still prevent us from using some of the plots for multidimensional continuous variables. Another minor limitation that does not harm the goal of this project but may cause some difficulty to the audience is the large number of rows and columns, which makes the labels on some graphs overlap each other. To overcome this, we adjusted the labels in various ways, like rotating and abbreviating the labels while scaling the axis and hiding the repeating labels, but they still overlap, for example, on the mosaic plot. And abbreviating the labels is not intuitive for interpretation.<br><br></p>
+<p>For future directions, since this is an up-to-date data set that is still updating, it would be helpful to build an API to obtain new shooting incident records and automatically update these visualizations, and publish as a public website for those who may be interested in this topic to view. The data can be stored in a database or put on the cloud, so that every time a shooting incident record is released by the NYPD, the API will be triggered to insert this record into the database.<br><br></p>
+<p>The lesson learned from this exploration is the wide range of possible graphs that we can choose for all types of variables, while most are documented and presented by the professor in class, we also had some research to explore more possible graphs, like the mirror chart and population pyramid, and finding out how some basic graphs, like the bar chart, may be transformed into a visually different graph. <br><br></p>
 
 </div>
             </section>
