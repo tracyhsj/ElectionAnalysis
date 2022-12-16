@@ -17,7 +17,7 @@ This data set is organized and does not contain a lot of mal-formatted values. T
 
 
 ```{r}
-install.packages("naniar")
+#install.packages("naniar")
 
 ```
 
