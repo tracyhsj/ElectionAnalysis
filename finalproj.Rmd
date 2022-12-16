@@ -90,7 +90,7 @@ library(naniar)
 ```
 
 ```{r}
-data <- read.csv(file = 'data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv', na.strings = "(null)")
+data <- read.csv(file = 'data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv', na.strings=c("(null)", "UNKNOWN", "U"))
 # head(data)
 ```
 
