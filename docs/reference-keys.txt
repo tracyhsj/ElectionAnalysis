@@ -9,3 +9,6 @@ missing-value-analysis
 results
 interactive-component
 conclusion
+the-victimsperpetrators-characteristics
+visualization-relating-to-incidents-demographics
+visualization-relating-to-incidents-date-time
