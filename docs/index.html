@@ -23,7 +23,7 @@
 <meta name="author" content="William Gu, Shujie Hu" />
 
 
-<meta name="date" content="2022-12-16" />
+<meta name="date" content="2022-12-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,13 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 
@@ -86,9 +93,26 @@
 </ul></li>
 <li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#the-victimsperpetrators-characteristics"><i class="fa fa-check"></i><b>4.1</b> The Victims/Perpetrators’ Characteristics</a></li>
-<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-demographics"><i class="fa fa-check"></i><b>4.2</b> Visualization Relating to Incidents Demographics</a></li>
-<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-date-time"><i class="fa fa-check"></i><b>4.3</b> Visualization Relating to Incidents Date Time</a></li>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#the-victimsperpetrators-characteristics"><i class="fa fa-check"></i><b>4.1</b> The Victims/Perpetrators’ Characteristics</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="results.html"><a href="results.html#the-contrast-between-perpetrators-age-vs-victims-age-population-pyramid"><i class="fa fa-check"></i><b>4.1.1</b> The Contrast Between Perpetrators’ Age vs Victims’ Age (Population Pyramid):</a></li>
+<li class="chapter" data-level="4.1.2" data-path="results.html"><a href="results.html#the-visualization-of-the-victims-characteristics-mirror-chart"><i class="fa fa-check"></i><b>4.1.2</b> The Visualization of the Victims’ Characteristics (Mirror Chart):</a></li>
+<li class="chapter" data-level="4.1.3" data-path="results.html"><a href="results.html#victims-characteristics-alternative-alluvial-chart"><i class="fa fa-check"></i><b>4.1.3</b> Victims’ Characteristics Alternative (Alluvial Chart)</a></li>
+<li class="chapter" data-level="4.1.4" data-path="results.html"><a href="results.html#the-visualization-of-the-perpetrators-characteristics-perp_age_group-perp_sex-and-perp_race.-spine-plot"><i class="fa fa-check"></i><b>4.1.4</b> The Visualization of the Perpetrators’ Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-demographics"><i class="fa fa-check"></i><b>4.2</b> Visualization Relating to Incidents Demographics</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="results.html"><a href="results.html#the-number-of-shooting-incidents-with-respect-to-the-precincts-map"><i class="fa fa-check"></i><b>4.2.1</b> The Number of Shooting Incidents With Respect to the Precincts (Map):</a></li>
+<li class="chapter" data-level="4.2.2" data-path="results.html"><a href="results.html#the-correlation-between-different-boroughs-and-the-victimsperpetrators.-histogram-facet"><i class="fa fa-check"></i><b>4.2.2</b> The Correlation Between Different Boroughs and the Victims/Perpetrators. (Histogram + facet)</a></li>
+<li class="chapter" data-level="4.2.3" data-path="results.html"><a href="results.html#the-ratio-of-death-for-the-shooting-incidents-in-each-borough-stacked-bar-chart"><i class="fa fa-check"></i><b>4.2.3</b> The Ratio of Death For The Shooting Incidents In Each Borough (Stacked Bar Chart)</a></li>
+<li class="chapter" data-level="4.2.4" data-path="results.html"><a href="results.html#the-ratio-of-death-with-respect-to-the-location-of-the-shooting-incidents-cleveland-dot-plot"><i class="fa fa-check"></i><b>4.2.4</b> The Ratio of Death With Respect To The Location of The Shooting Incidents (Cleveland dot plot)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#visualization-relating-to-incidents-date-time"><i class="fa fa-check"></i><b>4.3</b> Visualization Relating to Incidents Date Time</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="results.html"><a href="results.html#the-ratio-of-death-in-the-shooting-incidents-with-respect-to-hours-in-a-day.-stacked-bar-chart"><i class="fa fa-check"></i><b>4.3.1</b> The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart)</a></li>
+<li class="chapter" data-level="4.3.2" data-path="results.html"><a href="results.html#the-number-of-shooting-incidents-with-respect-to-month-line-chart-with-loess-smoother"><i class="fa fa-check"></i><b>4.3.2</b> The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)</a></li>
+<li class="chapter" data-level="4.3.3" data-path="results.html"><a href="results.html#the-relationship-between-the-month-and-boroughs-of-shooting-incidents-line-chart"><i class="fa fa-check"></i><b>4.3.3</b> The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart)</a></li>
+</ul></li>
 <li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#summary-of-results"><i class="fa fa-check"></i><b>4.4</b> Summary of Results:</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
@@ -115,13 +139,13 @@
 <div id="header">
 <h1 class="title">NYC 2022 Shooting Incident Analysis</h1>
 <p class="author"><em>William Gu, Shujie Hu</em></p>
-<p class="date"><em>2022-12-16</em></p>
+<p class="date"><em>2022-12-21</em></p>
 </div>
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>As shooting incidents are one of the most fatal crimes but also one that happens frequently in NYC, we’d like to investigate the correlation behind these incidents, hoping to explore the patterns of New York City’s shooting incidents to study perpetrator-victim relationships and address personal safety awareness. Since crime statistics may differ from the years prior to the pandemic, we will explore the most recent shooting incidents in NYC.
 Through various data visualization techniques, we hope to answer the following questions that we are interested in studying:
-<br>
+<br><br>
 1. The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)<br>
 2. The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart) <br>
 3. The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart &amp; Stacked Histogram)<br>

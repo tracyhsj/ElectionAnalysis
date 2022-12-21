@@ -16,7 +16,7 @@ df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
 
 #df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |> summarize(Count = n())
 #df_date2 <- df_date2 |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
-df_date <- df_date |> rename(Date=OCCUR_DATE) |> group_by(Date) |> summarize(Count = n())
+df_date <- df_date |> rename(Date=OCCUR_DATE) |> group_by(Date) |> dplyr::summarize(Count = n())
 #df_date2
 
 plot_ly(  

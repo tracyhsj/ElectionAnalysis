@@ -20,7 +20,7 @@ data <- read.csv(file = 'data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv', n
 ```
 ## The Victims/Perpetrators' Characteristics
 
-The Contrast Between Perpetrators' Age vs Victims’ Age (Population Pyramid):
+### The Contrast Between Perpetrators' Age vs Victims’ Age (Population Pyramid):
 ```{r}
 library(tibble)
 # As the perpetrator may escape and results in an empty record, the NAs are removed
@@ -61,8 +61,7 @@ Note: In order to present the age groups in its order, this pyramid is not sorte
 From this graph, it is obvious that the age group 25-44 ranks first in the number of both perpetrators and victims. However, it is also worth noticing that the number of teenage perpetrators(age < 24) is more than that of the teenage victims, whereas this difference is reversed for the age groups above 25, so that there are more victims than perpetrators for ages above 25, especially for ages above 45. Thus speaking of the age group distribution, perpetrators are younger than the victims.   
 
 
-<br><br>
-The Visualization of the Victims’ Characteristics (Mirror Chart):
+### The Visualization of the Victims’ Characteristics (Mirror Chart):
 ```{r}
 vic <- na.omit(data) 
 
@@ -85,8 +84,8 @@ ggplot(mirror, aes(x = VIC_AGE_GROUP, y = Freq, fill = VIC_SEX)) +
 
 From the mirror chart above, among all the victims, Black has the highest number of victims in terms of race, while the age group 25-44 ranks top among all races except for White. Most of the victims are male, but there are female victims across almost all age groups and all races except for Asian/Pacific Islander.
 
-<br><br>
-Victims’ Characteristics Alternative (Alluvial Chart)
+
+### Victims’ Characteristics Alternative (Alluvial Chart)
 ```{r}
 library(ggalluvial)
 
@@ -104,7 +103,7 @@ df_allu <- df_allu |> mutate(VIC_RACE = case_when(
   TRUE ~ VIC_RACE  
 ))
   
-df_allu <- df_allu |> group_by(VIC_AGE_GROUP, VIC_SEX, VIC_RACE) |> summarize(Freq = n())
+df_allu <- df_allu |> group_by(VIC_AGE_GROUP, VIC_SEX, VIC_RACE) |> dplyr::summarize(Freq = n())
 
 ggplot(df_allu, aes(y=Freq, axis1=VIC_SEX, axis2=VIC_AGE_GROUP, axis3=VIC_RACE ))+
   geom_alluvium(aes(fill=VIC_AGE_GROUP), width = 1/12) +
@@ -117,10 +116,11 @@ ggplot(df_allu, aes(y=Freq, axis1=VIC_SEX, axis2=VIC_AGE_GROUP, axis3=VIC_RACE )
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_void()
 ```
+
 Similar to the previous findings, male victims are a lot more than female victims. Most of them are within 18-24 and 25-44 age groups, which are young adults and mid-age people. Black people are the majority races, followed by Hispanics. White, Asian and other race are the minorities in terms of victims.
 
-<br><br>
-The Visualization of the Perpetrators' Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)
+
+### The Visualization of the Perpetrators' Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)
 ```{r}
 library("plyr")
 count(data, 'PERP_RACE')
@@ -148,13 +148,13 @@ vcd::mosaic(PERP_RACE ~ PERP_SEX + PERP_AGE_GROUP, perp,
 ```
 
 
-Note: To make the overlapped labels readable, (B,WH,BH,A/PI,W) on the y-axis are the abbreviations for "BLACK", "WHITE HISPANIC", "BLACK HISPANIC", "ASIAN / PACIFIC ISLANDER", "WHITE".
+Note: To make the overlapped labels readable, (B,WH,BH,A/PI,W) on the y-axis are the abbreviations for "BLACK", "WHITE HISPANIC", "BLACK HISPANIC", "ASIAN / PACIFIC ISLANDER", "WHITE". We have combined as many ways as we can think of to stop the labels from overlapping but this is the best we can get.
 <br>
 There are significantly more male perpetrators than female perpetrators, with 25-44 ranks first in terms of age group and Black in terms of race. There is also a correlation with the former graph of the victims in terms of the rank of age group and race.
 
 ## Visualization Relating to Incidents Demographics 
 
-The Number of Shooting Incidents With Respect to the Precincts (Map):
+### The Number of Shooting Incidents With Respect to the Precincts (Map):
 ```{r}
 library(sf)
 library(tmap)
@@ -181,8 +181,8 @@ ny_crime %>%
 
 Referring to the map of NYC, Precinct 44 is the Bronx, Precinct 75 is East New York, and Precinct 73 is Brownsville, the three areas where most shooting incidents occurred this year.
 
-<br><br>
-The Correlation Between Different Boroughs and the Victims/Perpetrators. (Histogram + facet)
+
+### The Correlation Between Different Boroughs and the Victims/Perpetrators. (Histogram + facet)
 ```{r}
 # vic <- na.omit(data)
 hist_vic <- vic %>%
@@ -200,8 +200,7 @@ ggplot(hist_vic, aes(x = VIC_AGE_GROUP, y = Freq, fill = VIC_RACE)) +
   labs(title = "The Victims' Characteristics With Respect to the Five Boroughs", x = "Victims' Age Group", y = "Number of Victims") +
   theme_grey(13)
 
-# perp <- na.omit(data) 
-
+perp <- na.omit(data)
 hist_perp <- perp %>%
   group_by(BORO, PERP_AGE_GROUP, PERP_RACE) %>%
   dplyr::summarize(Freq = n()) %>%
@@ -221,8 +220,8 @@ ggplot(hist_perp, aes(x = PERP_AGE_GROUP, y = Freq, fill = PERP_RACE)) +
 
 In general, Brooklyn and Manhattan are the boroughs where most shooting incidents occurred. Most of the perpetrators and victims are under the age group 25-44 in all boroughs, however, there are more teenage perpetrators (18-24) in some of the boroughs like the Bronx, while the number of victims under the age group 25-44 is much higher than that of perpetrators in the Bronx. The distribution of the graphs between perpetrator and victim are highly correlated, except for the boroughs of the Bronx and Queens.
 
-<br><br>
-The Ratio of Death For The Shooting Incidents In Each Borough (Stacked Bar Chart)
+
+### The Ratio of Death For The Shooting Incidents In Each Borough (Stacked Bar Chart)
 ```{r}
 ggplot(data, aes(x=BORO, fill=STATISTICAL_MURDER_FLAG)) +
   geom_bar() +
@@ -233,10 +232,11 @@ ggplot(data, aes(x=BORO, fill=STATISTICAL_MURDER_FLAG)) +
 
 
 ```
+
 Bronx and Brooklyn are where most shooting incidents happened, while Bronx has higher death rates than Brooklyn. Manhattan and Queens are similar and relatively safer than the former two Boroughs, having about half less shooting incidents reported. Among all five boroughs, Staten Island is the safest in terms of the total number of shooting incidents.
 
-<br><br>
-The Ratio of Death With Respect To The Location of The Shooting Incidents (Cleveland dot plot)
+
+### The Ratio of Death With Respect To The Location of The Shooting Incidents (Cleveland dot plot)
 ```{r}
 
 df_loc <-  data
@@ -260,7 +260,7 @@ By plotting the shooting incidents against descriptive locations, we noticed tha
 
 ## Visualization Relating to Incidents Date Time
 
-The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart)
+### The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart)
 ```{r}
 #df <- data |>
 #  pivot_longer(cols = -OCCUR_DATE, names_to = "TYPE", values_to = "RATE") |>
@@ -281,17 +281,23 @@ ggplot(df_1, aes(x=OCCUR_TIME, fill=STATISTICAL_MURDER_FLAG)) +
   #+ theme_grey(16)
   #+ theme(legend.title = element_blank())
 ```
+
 We can observe that shooting incidents have a clear drop between 5:00AM ~ 1:00PM, while the high shooting incident frequency starting around 7:00PM, it reaches peak around 10:00PM. The death cases went up as number of shooting incidents are reported, death rate are not very related to the time of shooting incident happened, however, it is still higher in the evening than daytime. 
 
-<br><br>
-The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)
+
+
+### The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)
 ```{r}
 library(dplyr)
 library(plotly)
 df_date <- data %>% mutate(OCCUR_DATE = as.Date(OCCUR_DATE, '%m/%d/%Y'))
 #str(df_date)
 
+
+df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |> dplyr::summarize(n = n())
+
 df_date2 <- df_date |> mutate(week = lubridate::week(df_date$OCCUR_DATE)) |> group_by(week) |>  dplyr::summarize(n = n())
+
 df_date2 <- df_date2 |> mutate(Date= lubridate::ymd( "2022-01-01" ) + lubridate::weeks( df_date2$week - 1 ))
 #df_date2
 
@@ -310,8 +316,8 @@ ggplot(df_date2, aes(Date, n))+
 
 From the above graph it is obvious that the number of shooting incidents peaks at July, and there is a general trend that starting from January 2022, the number of incidents went up and reached the peak, then it slightly went down until October, which is the last released time of this data set.
 
-<br><br>
-The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart)
+
+### The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart)
 ```{r}
 library(dplyr)
 library(plotly)
@@ -365,6 +371,7 @@ ggplot(df_date2, aes(x=Date, fill=BORO))+
   ggtitle("Shooting Incidents in 2022") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
+
 The above two graphs visualized the number of shooting incidents in the five boroughs by weeks in the past 3 quarters. From the line chart we noticed that Brooklyn's incidents peaks at April, but the total number of incidents in all five boroughs peaks at July as shown by the stacked histogram.
 
 ## Summary of Results:

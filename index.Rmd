@@ -9,7 +9,7 @@ site: bookdown::bookdown_site
 
   As shooting incidents are one of the most fatal crimes but also one that happens frequently in NYC, we’d like to investigate the correlation behind these incidents, hoping to explore the patterns of New York City’s shooting incidents to study perpetrator-victim relationships and address personal safety awareness. Since crime statistics may differ from the years prior to the pandemic, we will explore the most recent shooting incidents in NYC.
   Through various data visualization techniques, we hope to answer the following questions that we are interested in studying:
-<br>
+<br><br>
 1. The Number of Shooting Incidents With Respect To Month (Line Chart with LOESS Smoother)<br>
 2. The Ratio of Death in the Shooting Incidents With Respect to Hours In a Day. (Stacked Bar Chart) <br>
 3. The Relationship Between the Month and Boroughs of Shooting Incidents (Line Chart & Stacked Histogram)<br>
@@ -20,5 +20,5 @@ site: bookdown::bookdown_site
 8. The Contrast Between Perpetrators' Age vs Victims’ Age. (Population Pyramid) <br>
 9. The Visualization of the Victims’ Characteristics. (Mirror Chart + facet & Alluvial Chart)<br>
 10. The Visualization of the Perpetrators' Characteristics (PERP_AGE_GROUP, PERP_SEX, and PERP_RACE). (Spine Plot)<br>
- 
+
 
